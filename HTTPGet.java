@@ -4,19 +4,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import DAO.main.AnswerDao;
 
-                  
+import Character.Character;
+import DAO.AnswerDao;
+import Character.Character;
+
 
 
 
 
 public class HTTPGet {
+
+  static Character[] characters = new Character[77];
   public static void main(String args[]) throws Exception {
     // Providing the website URL
     URL url = new URL("https://hp-api.onrender.com/api/spells/");
@@ -44,6 +43,24 @@ public class HTTPGet {
         response.append(inputLine);
       } 
       in.close();
+
+      // Create an instance of AnswerDao
+      AnswerDao answerDao = new AnswerDao();
+      // Create the table
+      answerDao.createTable();
+      // Insert the data into the database
+      for (int i = 0; i < characters.length; i++) {
+        // Assuming the response is in JSON format and you have a method to parse it
+        // For example, if you have a method parseCharacterFromJson(String json)
+        // characters[i] = parseCharacterFromJson(response.toString());
+        // Here, you would need to implement the parsing logic based on the actual JSON structure
+        // For demonstration, let's assume you have a method to parse the JSON
+        // and create Character objects
+        // characters[i] = parseCharacterFromJson(response.toString());
+        // Insert the character into the database
+        // answerDao.insert(characters[i]);
+      }
+
       // Show the output
       System.out.println(response.toString());
     } else {

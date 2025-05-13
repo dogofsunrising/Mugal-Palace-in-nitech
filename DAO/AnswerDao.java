@@ -1,33 +1,34 @@
-package DAO.main;
+package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import Character.Character;
 
 
 public class AnswerDao {
     public void createTable() throws SQLException {
         String sql = """
-            CREATE TABLE IF NOT EXISTS characters (
-                name TEXT PRIMARY KEY,
-                house TEXT,
-                wizard INTEGER
-            )
+            create table answer(
+            id TEXT PRIMARY KEY,
+            name TEXT ,
+            description TEXT)
         """;
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         }
     }
-
+    
+    //データベースへデータを挿入するメソッド
     public void insert(Character c) throws SQLException {
         String sql = "INSERT OR IGNORE INTO characters(name, house, wizard) VALUES (?, ?, ?)";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, c.name());
-            pstmt.setString(2, c.house());
-            pstmt.setBoolean(3, c.wizard());
+            pstmt.setString(1, c.getId()); // 修正: getId()を使用
+            pstmt.setString(2, c.getName()); // 修正: getName()を使用
+            pstmt.setString(3, c.getDescription()); // 修正: getDescription()を使用
             pstmt.executeUpdate();
-        }
+        } 
     }
 
     public List<Character> getAll() throws SQLException {
@@ -38,9 +39,9 @@ public class AnswerDao {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 list.add(new Character(
-                    rs.getString("name"),//id
-                    rs.getString("house"),//name
-                    rs.getBoolean("wizard")//description
+                    rs.getString("id"), // 修正: idカラム名を確認
+                    rs.getString("name"),
+                    rs.getString("description")
                 ));
             }
         }
@@ -55,9 +56,9 @@ public class AnswerDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Character(
+                        rs.getString("id"),
                         rs.getString("name"),
-                        rs.getString("house"),
-                        rs.getBoolean("wizard")
+                        rs.getString("description")
                     );
                 }
             }
@@ -65,3 +66,4 @@ public class AnswerDao {
         return null; // 該当するデータがない場合はnullを返す
     }
 }
+
