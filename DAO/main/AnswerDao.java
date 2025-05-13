@@ -1,6 +1,8 @@
+package DAO.main;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class AnswerDao {
     public void createTable() throws SQLException {
@@ -36,9 +38,9 @@ public class AnswerDao {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 list.add(new Character(
-                    rs.getString("name"),
-                    rs.getString("house"),
-                    rs.getBoolean("wizard")
+                    rs.getString("name"),//id
+                    rs.getString("house"),//name
+                    rs.getBoolean("wizard")//description
                 ));
             }
         }
