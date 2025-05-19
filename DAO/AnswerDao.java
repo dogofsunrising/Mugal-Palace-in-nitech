@@ -8,7 +8,7 @@ import Character.Character;
 public class AnswerDao {
     public void createTable() throws SQLException {
         String sql = """
-            create table answer(
+            CREATE TABLE IF NOT EXISTS answer(
             id TEXT PRIMARY KEY,
             name TEXT ,
             description TEXT)
@@ -21,7 +21,7 @@ public class AnswerDao {
     
     //データベースへデータを挿入するメソッド
     public void insert(Character c) throws SQLException {
-        String sql = "INSERT OR IGNORE INTO characters(name, house, wizard) VALUES (?, ?, ?)";
+        String sql = "INSERT OR IGNORE INTO answer(id,name,description) VALUES (?, ?, ?)";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, c.getId()); // 修正: getId()を使用
@@ -33,7 +33,7 @@ public class AnswerDao {
 
     public List<Character> getAll() throws SQLException {
         List<Character> list = new ArrayList<>();
-        String sql = "SELECT * FROM characters";
+        String sql = "SELECT * FROM answer";
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -49,7 +49,7 @@ public class AnswerDao {
     }
 
     public Character getByName(String name) throws SQLException {
-        String sql = "SELECT * FROM characters WHERE name = ?";
+        String sql = "SELECT * FROM answer WHERE name = ?";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -64,6 +64,16 @@ public class AnswerDao {
             }
         }
         return null; // 該当するデータがない場合はnullを返す
+
+    }
+
+    public void deleteByName(String name) throws SQLException {
+        String sql = "DELETE FROM answer WHERE name = ?";
+        try (Connection conn = SQLiteManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.executeUpdate();
+        }
     }
 }
 

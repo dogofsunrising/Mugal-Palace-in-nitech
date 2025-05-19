@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import Character.Character;
 import DAO.AnswerDao;
-import Character.Character;
+
 
 
 
@@ -48,21 +50,27 @@ public class HTTPGet {
       AnswerDao answerDao = new AnswerDao();
       // Create the table
       answerDao.createTable();
-      // Insert the data into the database
-      for (int i = 0; i < characters.length; i++) {
-        // Assuming the response is in JSON format and you have a method to parse it
-        // For example, if you have a method parseCharacterFromJson(String json)
-        // characters[i] = parseCharacterFromJson(response.toString());
-        // Here, you would need to implement the parsing logic based on the actual JSON structure
-        // For demonstration, let's assume you have a method to parse the JSON
-        // and create Character objects
-        // characters[i] = parseCharacterFromJson(response.toString());
-        // Insert the character into the database
-        // answerDao.insert(characters[i]);
+      
+      Gson gson = new Gson();
+      // Deserialize the JSON response into an array of Character objects
+      Type characterListType = new TypeToken<Character[]>() {}.getType();
+      characters = gson.fromJson(response.toString(), characterListType);
+      for (Character string : characters) {
+        // Print the character details
+        System.out.println("ID: " + string.getId());
+        System.out.println("Name: " + string.getName());
+        System.out.println("Description: " + string.getDescription());
+        System.out.println();
       }
+      // Insert the data into the database
+      for (Character it_character : characters) {
+        // Insert each character into the database
+        answerDao.insert(it_character);
+      }
+      
 
       // Show the output
-      System.out.println(response.toString());
+      //System.out.println(response.toString());
     } else {
       System.out.println("Error found !!!");
     }
