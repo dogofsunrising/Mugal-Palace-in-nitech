@@ -15,19 +15,38 @@ public class AskQuestion {
         }
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("出題形式を選んでください: 1=〇✕, 2=4択");
-            String mode = scanner.nextLine();
-            if (mode.equals("2")) {
-                FourChoiceQuestion q = createFourChoiceQuestion(list);
-                int userAnswer = askFourChoiceQuestion(q, scanner);
-                showFourChoiceResult(userAnswer, q.correctIndex, q.correctName);
-            } else {
-                QuestionPair pair = createQuestionPair(list);
-                boolean userAnswer = askQuestion(pair, scanner);
-                showResult(userAnswer, pair.isCorrectPair, pair.correctName);
-            }
+            String mode = getModeInput(scanner);
+            askQuiz(list, scanner, mode);
         } finally {
             scanner.close();
+        }
+    }
+
+    // 出題形式の入力（不正な入力は再入力）
+    private static String getModeInput(Scanner scanner) {
+        String mode;
+        while (true) {
+            System.out.println("出題形式を選んでください: 1=〇✕, 2=4択");
+            mode = scanner.nextLine();
+            if (mode.equals("1") || mode.equals("2")) {
+                break;
+            } else {
+                System.out.println("1 または 2 を入力してください。");
+            }
+        }
+        return mode;
+    }
+
+    // modeに応じてクイズを出題する関数
+    private static void askQuiz(List<Character> list, Scanner scanner, String mode) {
+        if (mode.equals("2")) {
+            FourChoiceQuestion q = createFourChoiceQuestion(list);
+            int userAnswer = askFourChoiceQuestion(q, scanner);
+            showFourChoiceResult(userAnswer, q.correctIndex, q.correctName);
+        } else {
+            QuestionPair pair = createQuestionPair(list);
+            boolean userAnswer = askQuestion(pair, scanner);
+            showResult(userAnswer, pair.isCorrectPair, pair.correctName);
         }
     }
 
