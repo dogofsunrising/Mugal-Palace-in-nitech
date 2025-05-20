@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import Character.Character;
 import java.util.Random;
+import DAO.HistoryDao;
 
 public class AskQuestion {
 
@@ -39,14 +40,47 @@ public class AskQuestion {
 
     // modeに応じてクイズを出題する関数
     private static void askQuiz(List<Character> list, Scanner scanner, String mode) {
+        HistoryDao historyDao = new HistoryDao();
+        try {
+            historyDao.createTable();
+        } catch (SQLException e) {
+            System.out.println("履歴テーブル作成エラー: " + e.getMessage());
+        }
         if (mode.equals("2")) {
             FourChoiceQuestion q = createFourChoiceQuestion(list);
             int userAnswer = askFourChoiceQuestion(q, scanner);
+            boolean isCorrect = (userAnswer == q.correctIndex);
             showFourChoiceResult(userAnswer, q.correctIndex, q.correctName);
+            // 履歴保存
+            try {
+                historyDao.insert(
+                    q.description,
+                    q.choices.get(userAnswer),
+                    q.correctName,
+                    String.valueOf(userAnswer + 1),
+                    isCorrect,
+                    "4択"
+                );
+            } catch (SQLException e) {
+                System.out.println("履歴保存エラー: " + e.getMessage());
+            }
         } else {
             QuestionPair pair = createQuestionPair(list);
             boolean userAnswer = askQuestion(pair, scanner);
             showResult(userAnswer, pair.isCorrectPair, pair.correctName);
+            // 履歴保存
+            try {
+                historyDao.insert(
+                    pair.description,
+                    pair.shownName,
+                    pair.correctName,
+                    userAnswer ? "y" : "n",
+                    userAnswer == pair.isCorrectPair,
+                    "〇✕"
+                );
+            } catch (SQLException e) {
+                System.out.println("履歴保存エラー: " + e.getMessage());
+            }
         }
     }
 
