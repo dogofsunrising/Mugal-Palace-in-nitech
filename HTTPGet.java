@@ -8,9 +8,8 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import Character.Character;
-import DAO.AnswerDao;
-
-
+//import HTTPGetTest;
+import DAO.CharactersDao;
 
 
 
@@ -32,6 +31,7 @@ public class HTTPGet {
     int responseCode = MyConn.getResponseCode();
     System.out.println("GET Response Code :: " + responseCode);
 
+
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // Create a reader with the input stream reader.
       BufferedReader in = new BufferedReader(new InputStreamReader(MyConn.getInputStream()));
@@ -47,16 +47,16 @@ public class HTTPGet {
       in.close();
 
       // Create an instance of AnswerDao
-      AnswerDao answerDao = new AnswerDao();
+      CharactersDao CharacterDao = new CharactersDao();
       // Create the table
-      answerDao.createTable();
+      CharacterDao.createTable();
       
       Gson gson = new Gson();
-      // Deserialize the JSON response into an array of Character objects
+      // Deserialize the JSON response into an array of Characters objects
       Type characterListType = new TypeToken<Character[]>() {}.getType();
       characters = gson.fromJson(response.toString(), characterListType);
       for (Character string : characters) {
-        // Print the character details
+        // Print the Characters details
         System.out.println("ID: " + string.getId());
         System.out.println("Name: " + string.getName());
         System.out.println("Description: " + string.getDescription());
@@ -64,8 +64,8 @@ public class HTTPGet {
       }
       // Insert the data into the database
       for (Character it_character : characters) {
-        // Insert each character into the database
-        answerDao.insert(it_character);
+        // Insert each Characters into the database
+        CharacterDao.insert(it_character);
       }
       
 
