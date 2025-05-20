@@ -18,7 +18,12 @@ import DAO.CharactersDao;
 public class HTTPGet {
 
   static Character[] characters = new Character[77];
+
   public static void main(String args[]) throws Exception {
+    fetchAndSaveSpells();
+  }
+
+  public static void fetchAndSaveSpells() throws Exception {
     // Providing the website URL
     URL url = java.net.URI.create("https://hp-api.onrender.com/api/spells/").toURL();
 
@@ -32,7 +37,6 @@ public class HTTPGet {
     int responseCode = MyConn.getResponseCode();
     System.out.println("GET Response Code :: " + responseCode);
 
-
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // Create a reader with the input stream reader.
       BufferedReader in = new BufferedReader(new InputStreamReader(MyConn.getInputStream()));
@@ -44,14 +48,14 @@ public class HTTPGet {
       // Write each of the input line
       while ((inputLine = in.readLine()) != null) {
         response.append(inputLine);
-      } 
+      }
       in.close();
 
-      // Create an instance of AnswerDao
+      // Create an instance of CharactersDao
       CharactersDao CharacterDao = new CharactersDao();
       // Create the table
       CharacterDao.createTable();
-      
+
       Gson gson = new Gson();
       // Deserialize the JSON response into an array of Characters objects
       Type characterListType = new TypeToken<Character[]>() {}.getType();
@@ -68,10 +72,6 @@ public class HTTPGet {
         // Insert each Characters into the database
         CharacterDao.insert(it_character);
       }
-      
-
-      // Show the output
-      //System.out.println(response.toString());
     } else {
       System.out.println("Error found !!!");
     }
