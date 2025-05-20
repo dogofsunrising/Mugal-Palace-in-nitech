@@ -11,10 +11,6 @@ import Character.Character;
 import DAO.AnswerDao;
 
 
-
-
-
-
 public class HTTPGet {
 
   static Character[] characters = new Character[77];
