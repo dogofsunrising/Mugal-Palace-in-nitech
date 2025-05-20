@@ -20,7 +20,7 @@ public class EntryPoint {
     // 入力された数字に応じた処理
     switch (choice) {
       case 1:
-        System.out.println("クイズを始めます！");
+        QuizManager.startQuiz();
         break;
       case 2:
         System.out.println("モードを変更します。");
