@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import DAO.AnswerDao;
+import DAO.CharactersDao;
 import java.sql.SQLException;
 import java.util.List;
 import Character.Character;
@@ -52,7 +52,7 @@ public class AskQuestion {
 
     // データベースからキャラクターリストを取得
     private static List<Character> getCharacterList() {
-        AnswerDao answerDao = new AnswerDao();
+        CharactersDao answerDao = new CharactersDao();
         try {
             return answerDao.getAll();
         } catch (SQLException e) {
