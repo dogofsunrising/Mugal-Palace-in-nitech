@@ -26,7 +26,7 @@ public class EntryPoint {
           QuizManager.startQuiz(scanner);
           break;
         case 2:
-          System.out.println("モードを変更します。");
+          QuizManager.changeMode(scanner);
           break;
         case 3:
           System.out.println("履歴を表示します。");
