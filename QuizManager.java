@@ -1,8 +1,7 @@
 import java.util.Scanner;
 
 public class QuizManager {
-  public static void startQuiz() {
-    Scanner scanner = new Scanner(System.in);
+  public static void startQuiz(Scanner scanner) {
 
     System.out.println("Quiz Time!");
     System.out.println("Q1: What is the capital of Japan?");
@@ -18,7 +17,5 @@ public class QuizManager {
     } else {
       System.out.println("Wrong! The correct answer is Tokyo.");
     }
-
-    scanner.close();
   }
 }
