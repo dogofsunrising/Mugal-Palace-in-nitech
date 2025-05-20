@@ -91,13 +91,18 @@ public class AskQuestion {
         }
         System.out.print("正しい名前の番号を選んでください（1-4）: ");
         int ans = -1;
-        while (ans < 1 || ans > 4) {
+        while (true) {
+            String input = scanner.nextLine();
             try {
-                ans = Integer.parseInt(scanner.nextLine());
+                ans = Integer.parseInt(input);
+                if (ans >= 1 && ans <= 4) {
+                    break;
+                } else {
+                    System.out.print("1-4で入力してください: ");
+                }
             } catch (NumberFormatException e) {
-                ans = -1;
+                System.out.print("数字で1-4を入力してください: ");
             }
-            if (ans < 1 || ans > 4) System.out.print("1-4で入力してください: ");
         }
         return ans-1;
     }
@@ -116,7 +121,15 @@ public class AskQuestion {
         System.out.println("説明: " + pair.description);
         System.out.println("名前: " + pair.shownName);
         System.out.print("この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: ");
-        String input = scanner.nextLine();
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
+                break;
+            } else {
+                System.out.print("y または n で入力してください: ");
+            }
+        }
         return input.equalsIgnoreCase("y");
     }
 
