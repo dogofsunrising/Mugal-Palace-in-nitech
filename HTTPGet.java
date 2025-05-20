@@ -25,17 +25,22 @@ public class HTTPGet {
 
   public static void fetchAndSaveSpells() throws Exception {
     // Providing the website URL
+
     URL url = java.net.URI.create("https://hp-api.onrender.com/api/spells/").toURL();
+
 
     // Creating an HTTP connection
     HttpURLConnection MyConn = (HttpURLConnection) url.openConnection();
+
 
     // Set the request method to "GET"
     MyConn.setRequestMethod("GET");
 
     // Collect the response code
     int responseCode = MyConn.getResponseCode();
-    System.out.println("GET Response Code :: " + responseCode);
+    //Fetch Test
+    HTTPGetTest test = new HTTPGetTest();
+    test.testGetResponseCode(url,responseCode);
 
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // Create a reader with the input stream reader.
