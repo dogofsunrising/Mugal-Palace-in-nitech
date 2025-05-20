@@ -1,0 +1,45 @@
+\documentclass[uplatex,dvipdfmx,a4paper]{jsarticle}
+
+% ソースコードおよび結果の表示に関する設定：ここから
+\usepackage{listings,jlisting,color}
+\usepackage{plautopatch}
+\usepackage{amsmath}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{diagbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{titling}
+\usepackage{float}
+
+
+
+
+\lstset{
+  aboveskip=20pt,
+  belowskip=20pt,
+}
+\lstdefinestyle{source}{%
+  language=matlab,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\ttfamily,
+  xleftmargin=2em,
+  basewidth=.51em,
+  frame=shadowbox,
+  rulesepcolor=\color{black},
+}
+\lstdefinestyle{result}{%
+  basicstyle=\ttfamily\small,
+  xleftmargin=2em,
+  basewidth=.51em,
+  frame=single,
+  frameround=tttt,
+}
+
+
+\title{メディア系演習 音声情報処理 レポート}
+\author{35719003 A班 天野歩夢}
+\date{2025年4月18日,2025年4月25日,2025年5月2日}
+\setlength{\droptitle}{5em} % タイトルの位置を調整
+
