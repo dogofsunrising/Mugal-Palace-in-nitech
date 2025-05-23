@@ -32,7 +32,7 @@ public class EntryPoint {
           System.out.println("履歴を表示します。");
           break;
         case 4:
-          System.out.println("終了しました");
+          QuizHistory.showHistory();
           scanner.close();
           return; // または break + while 条件に false
         default:
