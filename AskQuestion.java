@@ -8,34 +8,17 @@ import DAO.HistoryDao;
 
 public class AskQuestion {
 
-    public static void main(String[] args) {
+    public void start(Scanner scanner,String mode) {
         List<Character> list = getCharacterList();
         if (list == null || list.isEmpty()) {
             System.out.println("データベースに問題がありません。");
             return;
         }
-        Scanner scanner = new Scanner(System.in);
         try {
-            String mode = getModeInput(scanner);
             askQuiz(list, scanner, mode);
         } finally {
-            scanner.close();
+           
         }
-    }
-
-    // 出題形式の入力（不正な入力は再入力）
-    private static String getModeInput(Scanner scanner) {
-        String mode;
-        while (true) {
-            System.out.println("出題形式を選んでください: 1=〇✕, 2=4択");
-            mode = scanner.nextLine();
-            if (mode.equals("1") || mode.equals("2")) {
-                break;
-            } else {
-                System.out.println("1 または 2 を入力してください。");
-            }
-        }
-        return mode;
     }
 
     // modeに応じてクイズを出題する関数
