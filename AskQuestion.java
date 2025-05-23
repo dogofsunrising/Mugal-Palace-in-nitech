@@ -17,7 +17,7 @@ public class AskQuestion {
         try {
             askQuiz(list, scanner, mode);
         } finally {
-            scanner.close();
+            System.out.println("クイズ終了。");
         }
     }
 
