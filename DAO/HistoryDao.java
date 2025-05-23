@@ -63,7 +63,7 @@ public class HistoryDao {
     }
 
     // 履歴テーブルを初期化（全削除）
-    public void clearTable() throws SQLException {
+    public static void clearTable() throws SQLException {
         String sql = "DELETE FROM history";
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement()) {
