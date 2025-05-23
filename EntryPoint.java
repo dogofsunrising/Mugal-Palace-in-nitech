@@ -30,9 +30,10 @@ public class EntryPoint {
           break;
         case 3:
           System.out.println("履歴を表示します。");
+          QuizHistory.showHistory();
           break;
         case 4:
-          QuizHistory.showHistory();
+          System.out.println("Exiting the game. Goodbye!");
           scanner.close();
           return; // または break + while 条件に false
         default:
