@@ -5,10 +5,10 @@ import java.util.List;
 import Character.Character;
 
 
-public class AnswerDao {
+public class CharactersDao {
     public void createTable() throws SQLException {
         String sql = """
-            CREATE TABLE IF NOT EXISTS answer(
+            CREATE TABLE IF NOT EXISTS datas(
             id TEXT PRIMARY KEY,
             name TEXT ,
             description TEXT)
@@ -21,7 +21,7 @@ public class AnswerDao {
     
     //データベースへデータを挿入するメソッド
     public void insert(Character c) throws SQLException {
-        String sql = "INSERT OR IGNORE INTO answer(id,name,description) VALUES (?, ?, ?)";
+        String sql = "INSERT OR IGNORE INTO datas(id,name,description) VALUES (?, ?, ?)";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, c.getId()); // 修正: getId()を使用
@@ -33,7 +33,7 @@ public class AnswerDao {
 
     public List<Character> getAll() throws SQLException {
         List<Character> list = new ArrayList<>();
-        String sql = "SELECT * FROM answer";
+        String sql = "SELECT * FROM datas";
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -49,7 +49,7 @@ public class AnswerDao {
     }
 
     public Character getByName(String name) throws SQLException {
-        String sql = "SELECT * FROM answer WHERE name = ?";
+        String sql = "SELECT * FROM datas WHERE name = ?";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -68,7 +68,7 @@ public class AnswerDao {
     }
 
     public void deleteByName(String name) throws SQLException {
-        String sql = "DELETE FROM answer WHERE name = ?";
+        String sql = "DELETE FROM datas WHERE name = ?";
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
