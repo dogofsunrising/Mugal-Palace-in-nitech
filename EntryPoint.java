@@ -24,27 +24,38 @@ public class EntryPoint {
       
 
       choice = scanner.nextInt();
-      switch (choice) {
-        case 1:
-          QuizManager.startQuiz(scanner);
+      Object obj = choice;
+      switch (obj) {
+        case Integer i:
+        switch (i) {
+          case 1:
+            QuizManager.startQuiz(scanner);
+            break;
+          case 2:
+            QuizManager.changeMode(scanner);
+            break;
+          case 3:
+            System.out.println("履歴を表示します。");
+            QuizHistory.showHistory();
+            break;
+          case 4:
+            System.out.println("clear history");
+            HistoryDao.clearTable();
+            return; // または break + while 条件に false
+          case 5:
+            System.out.println("Exiting the game. Goodbye!");
+            scanner.close();
+            return; // または break + while 条件に false
+          default:
+            System.out.println("無効な入力です。1〜4を選んでください。");
+        }
           break;
-        case 2:
-          QuizManager.changeMode(scanner);
+      
+          case String s:
+          System.out.println("無効な入力です。数字を入力してください。");
           break;
-        case 3:
-          System.out.println("履歴を表示します。");
-          QuizHistory.showHistory();
-          break;
-        case 4:
-          System.out.println("clear history");
-          HistoryDao.clearTable();
-          return; // または break + while 条件に false
-        case 5:
-          System.out.println("Exiting the game. Goodbye!");
-          scanner.close();
-          return; // または break + while 条件に false
         default:
-          System.out.println("無効な入力です。1〜4を選んでください。");
+          break;
       }
     }
   }
