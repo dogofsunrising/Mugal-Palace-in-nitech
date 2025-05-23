@@ -1,25 +1,15 @@
+import java.util.List;
 import java.util.Scanner;
+import Character.Character;
 
 public class QuizManager {
 
   private static int mode = 0; // 0: 4択問題モード, 1: 2択問題モード
   
   public static void startQuiz(Scanner scanner) {
-
-    System.out.println("Quiz Time!");
-    System.out.println("Q1: What is the capital of Japan?");
-    System.out.println("[1] Tokyo");
-    System.out.println("[2] Osaka");
-    System.out.println("[3] Kyoto");
-
-    System.out.print("Your answer: ");
-    int answer = scanner.nextInt();
-
-    if (answer == 1) {
-      System.out.println("Correct!");
-    } else {
-      System.out.println("Wrong! The correct answer is Tokyo.");
-    }
+    AskQuestion askQuestion = new AskQuestion();
+    askQuestion.start(scanner,mode == 0 ? "2" : "1");
+    
   }
 
   public static void changeMode(Scanner scanner) {

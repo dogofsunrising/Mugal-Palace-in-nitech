@@ -8,15 +8,13 @@ import DAO.HistoryDao;
 
 public class AskQuestion {
 
-    public static void main(String[] args) {
+    public void start(Scanner scanner,String mode) {
         List<Character> list = getCharacterList();
         if (list == null || list.isEmpty()) {
             System.out.println("データベースに問題がありません。");
             return;
         }
-        Scanner scanner = new Scanner(System.in);
         try {
-            String mode = getModeInput(scanner);
             askQuiz(list, scanner, mode);
         } finally {
             scanner.close();
