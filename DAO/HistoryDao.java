@@ -62,6 +62,15 @@ public class HistoryDao {
         return list;
     }
 
+    // 履歴テーブルを初期化（全削除）
+    public void clearTable() throws SQLException {
+        String sql = "DELETE FROM history";
+        try (Connection conn = SQLiteManager.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+        }
+    }
+
     // 履歴レコードを表す内部クラス
     public static class HistoryRecord {
         public int id;
