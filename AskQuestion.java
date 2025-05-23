@@ -21,21 +21,6 @@ public class AskQuestion {
         }
     }
 
-    // 出題形式の入力（不正な入力は再入力）
-    private static String getModeInput(Scanner scanner) {
-        String mode;
-        while (true) {
-            System.out.println("出題形式を選んでください: 1=〇✕, 2=4択");
-            mode = scanner.nextLine();
-            if (mode.equals("1") || mode.equals("2")) {
-                break;
-            } else {
-                System.out.println("1 または 2 を入力してください。");
-            }
-        }
-        return mode;
-    }
-
     // modeに応じてクイズを出題する関数
     private static void askQuiz(List<Character> list, Scanner scanner, String mode) {
         HistoryDao historyDao = new HistoryDao();
