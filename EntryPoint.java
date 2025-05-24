@@ -39,9 +39,8 @@ public class EntryPoint {
             QuizHistory.showHistory();
             break;
           case 4:
-            System.out.println("clear history");
-            HistoryDao.clearTable();
-            return; // または break + while 条件に false
+            QuizHistory.clearHistory();
+            return;// または break + while 条件に false
           case 5:
             System.out.println("Exiting the game. Goodbye!");
             scanner.close();

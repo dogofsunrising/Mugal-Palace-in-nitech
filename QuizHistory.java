@@ -29,6 +29,15 @@ public class QuizHistory {
     }
   }
 
+  public static void clearHistory() {
+    try {
+      HistoryDao.clearTable();
+      System.out.println("履歴をクリアしました。");
+    } catch (SQLException e) {
+      System.out.println("履歴のクリアに失敗しました: " + e.getMessage());
+    }
+  }
+
   public static void main(String[] args) {
     showHistory();
   }
