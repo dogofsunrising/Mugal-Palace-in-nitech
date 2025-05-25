@@ -59,7 +59,7 @@ public class AskQuestion {
                     pair.correctName,
                     userAnswer ? "y" : "n",
                     userAnswer == pair.isCorrectPair,
-                    "〇✕"
+                    "〇×"
                 );
             } catch (SQLException e) {
                 System.out.println("履歴保存エラー: " + e.getMessage());
