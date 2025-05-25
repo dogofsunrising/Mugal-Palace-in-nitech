@@ -1,0 +1,382 @@
+\documentclass[uplatex,dvipdfmx,a4paper]{jsarticle}
+
+% ソースコードおよび結果の表示に関する設定：ここから
+\usepackage{listings,jlisting,color}
+\usepackage{plautopatch}
+\usepackage{amsmath}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{diagbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{titling}
+\usepackage{float}
+\usepackage[edges]{forest}
+
+
+
+
+\lstset{
+  aboveskip=20pt,
+  belowskip=20pt,
+}
+\lstdefinestyle{source}{%
+  language=matlab,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\ttfamily,
+  xleftmargin=2em,
+  basewidth=.51em,
+  frame=shadowbox,
+  rulesepcolor=\color{black},
+}
+\lstdefinestyle{result}{%
+  basicstyle=\ttfamily\small,
+  xleftmargin=2em,
+  basewidth=.51em,
+  frame=single,
+  frameround=tttt,
+}
+
+
+\title{プログラミング応用レポート}
+\author{チーム:ムガルパレス名工大店}
+\date{2025年5月26日}
+\setlength{\droptitle}{5em} % タイトルの位置を調整
+
+\begin{document}
+\maketitle
+
+\section{はじめに}
+本レポートは、2025年度名古屋工業大学プログラミング応用の課題レポートである。
+本レポートでは、我々のチーム「ムガルパレス名工大店」が開発した「WizardSpellNameQuiz」の仕様の解説を行う。
+本レポートは、以下の構成で進める。
+\begin{itemize}
+  \item 1章: はじめに
+  \item 2章: プログラムの概要
+  \item 3章: 解説
+  \item 4章: おわりに
+\end{itemize}
+本プロダクトは、ハリーポッターapi\href{https://github.com/KostaSav/hp-api}{[githubのリンク]}を使用しており、ハリーポッターに登場する魔法の名前を当てるクイズゲームである。
+
+\section{プログラムの概要}
+
+今回のプログラムは、課題の指示に従い作成されている。課題の指示は以下の通りである。
+\begin{itemize}
+  \item データベースを使うこと
+  \item Junitを用いたテストコードを作成すること
+  \item GoFのデザインパターンを1つ以上使うこと
+  \item Java 17で新たに採用された言語仕様を調べ、それを用いたプログラムとすること%まだやれてないね～
+  \end{itemize}
+
+  これらの指示に従い、我々は以下のようなプログラムを作成した。
+  \begin{itemize}
+    \item データベースを使うこと
+    \begin{itemize}
+      \item SQLiteを使用して、ハリーポッターapiから取得したデータのid、魔法の名前及びその説明をデータベースに保存した。
+      \item データベースは、SQLiteのJDBCドライバを使用して接続した。
+    \end{itemize}
+    \item Junitを用いたテストコードを作成すること
+    \begin{itemize}
+      \item Junitを使用して、プログラムの各機能のテストコードを作成した。
+      \item テストコードは、プログラムの各機能が正しく動作することを確認するために使用した。
+    \end{itemize}
+    \item BoFのデザインパターンを1つ以上使うこと
+    \begin{itemize}
+      \item BoFのデザインパターンとして、algorithmパターンを使用した。
+      \item algorithmパターン出題形式の変換を行う機能を実装した。
+    \end{itemize}
+    \item Java 17で新たに採用された言語仕様を調べ、それを用いたプログラムとすること
+    \begin{itemize}
+      \item Java 17で新たに採用された言語仕様として、Pattern Matching for switchを使用した。
+      \item Pattern Matching for switchを使用して、魔法の名前とその説明を取得するクラスを作成した。
+    \end{itemize}
+
+  \end{itemize}
+
+  今回のプロダクトのアーキテクチャは、以下のようになっている。
+
+  \begin{forest}
+for tree={
+    folder,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    l sep=10pt,
+    edge path={
+        \noexpand\path [draw, \forestoption{edge}]
+        (!u.south west) -- +(5pt,0) |- (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+        if n=1
+            {insert before={[,phantom]}}
+            {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+}
+[プロジェクトルート
+    [Character
+        [Character.java]
+    ]
+    [DAO
+        [CharacterDao.java]
+        [HistoryDao.java]
+        [SQLiteManager.java]
+    ]
+    [lib
+        [gson-2.10.1.jar]
+        [hamcrest-core-1.3.jar]
+        [junit-4.13.2.jar]
+        [sqlite-jbdc-3.36.0.3.jar]
+    ]
+    [AskQuestion.java]
+    [EntryPoint.java]
+    [HTTPGet.java]
+    [HTTPGetTest.java]
+    [QuizHistory.java]
+    [QuizManager.java]
+]
+\end{forest}
+  
+      
+
+\pagebreak    
+
+
+\par また、今後の解説に使用するためプログラムの実行結果を以下に示す。
+\begin{lstlisting}[style=result]
+   
+Hello, Mugal Palace in Nitech!
+This is a Harry Potter quiz game.
+
+Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 1
+説明: Conjures and projects Lord Voldemort's Dark Mark
+1: Morsmordre
+2: Avada Kedavra
+3: Mucus Ad Nauseam
+4: Obliviate
+正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 4
+不正解。正解は 1: Morsmordre です。
+
+Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 2
+
+--- Change Quiz Mode ---
+Current mode: 4択モード
+Select new mode:
+[0] 4択問題モード
+[1] 2択問題モード
+Your choice: 1
+モードを 2択問題モード に変更しました。
+
+Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 1
+説明: Reveals the presence of another person
+名前: Homenum Revelio
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: n    
+不正解。正解は 〇 です。
+
+Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 3
+履歴を表示します。
+
+--- Quiz History ---
+[2025-05-25 13:18:01] 問題: Reveals the presence of another person | 表示名: Homenum Revelio |  正解: Homenum Revelio | 回答: n | 正誤: × | モード: 〇×
+[2025-05-25 13:17:32] 問題: Conjures and projects Lord Voldemort's Dark Mark | 表示名: Obliviate | 正解: Morsmordre | 回答: 4 | 正誤: × | モード: 4択
+[2025-05-25 11:36:42] 問題: Links objects together for better communication | 表示名: Geminio | 正解: Protean Charm | 回答: 2 | 正誤: × | モード: 4択
+
+Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 5
+
+\end{lstlisting}
+
+\section{解説}
+
+ここからは、実行結果に基づいて解説を行う。
+\par まず、以下の部分の解説を行う。
+\begin{lstlisting}[style=result]
+  Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 1
+説明: Conjures and projects Lord Voldemort's Dark Mark
+1: Morsmordre
+2: Avada Kedavra
+3: Mucus Ad Nauseam
+4: Obliviate
+正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 4
+不正解。正解は 1: Morsmordre です。
+\end{lstlisting}
+この部分は、クイズの出題と回答の部分である。
+ユーザは、1を入力することでクイズを開始することができる。
+クイズでは、ハリーポッターに登場する魔法の説明が表示され、その説明に対応する魔法の名前を選択肢から選ぶ形式である。
+選択肢は、1から4までの番号で表示され、ユーザはその中から正しい番号を選ぶ必要がある。
+不正解の場合は、正解の番号とその魔法の名前が表示される。
+
+\par 実際にこの部分のロジックを解説を行う。
+まず、HTTP.Javaにある「fetchAndSaveSpells」という関数を用いてハリーポッターapiから情報を取得して、
+事前に構築したCharacter.javaのクラスに保存する。その後、保存した情報をjbdcを用いてデータベースに保存する。
+ここまでの処理は、実際にプロダクトを動かす前に行う必要がある。
+最初にプロダクトを起動する際にはEntryPoint.javaの「main」関数を実行する。
+その後、QuizManager.javaの「startQuiz」関数を実行することでクイズが開始される。
+そして、関数の実行によりAskQuestion.javaの「start」関数が呼び出される。
+それにより、クイズの出題が行われる。
+\par 実際にクイズの出題のロジックは、2択の場合はデータベースからランダムにデータを取得して、
+その説明と名前のペアを保存しておく、その後、ユーザに説明と名前を表示し、それらが一致するかどうかを出題する。
+これらの情報は、事前に作成したQuizHistory.javaのHistoryクラスに保存される。 4択の場合は、データベースからランダムに4つのデータを取得して、
+そのうち1つを正解として、残りの3つを不正解として選択肢を作成する。
+\par 次に、以下の部分の解説を行う。
+\begin{lstlisting}[style=result]
+  Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 2
+--- Change Quiz Mode ---
+Current mode: 4択モード
+Select new mode:
+[0] 4択問題モード
+[1] 2択問題モード
+Your choice: 1
+モードを 2択問題モード に変更しました。
+\end{lstlisting}
+\par この部分は、クイズのモードを変更する部分である。この部分では課題の要件であるGoFのデザインパターンを使用している。
+実際に使用しているデザインパターンは、4択の出題形式と2択の出題形式という複数のアルゴリズムを切り替える、Strategyパターンを使用した。
+\par 具体的には、EntryPoint.javaのによりQuizManager.javaの「changeMode」関数が呼び出される。
+その後、QuizManager.javaの「changeMode」関数によりAskQuestion.javaに使用される変数を変更することで
+出題形式を変更することができる。
+\par 次に、以下の部分の解説を行う。
+\begin{lstlisting}[style=result]
+  Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 1
+説明: Reveals the presence of another person
+名前: Homenum Revelio
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: n
+不正解。正解は 〇 です。
+\end{lstlisting}
+
+\par この部分は、2択の出題形式でのクイズの出題と回答の部分である。
+先ほどの解説で説明したため、ここでは詳細な解説は省略する。
+\par 次に、以下の部分の解説を行う。
+\begin{lstlisting}[style=result]
+  Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 3
+履歴を表示します。
+--- Quiz History ---
+[2025-05-25 13:18:01] 問題: Reveals the presence of another person | 表示名: Homenum Revelio |  正解: Homenum Revelio | 回答: n | 正誤: × | モード: 〇×
+[2025-05-25 13:17:32] 問題: Conjures and projects Lord Voldemort's Dark Mark | 表示名: Obliviate | 正解: Morsmordre | 回答: 4 | 正誤: × | モード: 4択
+[2025-05-25 11:36:42] 問題: Links objects together for better communication | 表示名: Geminio | 正解: Protean Charm | 回答: 2 | 正誤: × | モード: 4択
+
+
+\end{lstlisting}
+\par この部分は、クイズの履歴を表示する部分である。
+\par QuizManager.javaの「showHistory」関数が呼び出されることで、QuizHistory.javaの「getHistory」関数が呼び出され、
+出題の際にHistoryクラスに保存されていた、出題の説明、表示名、正解、回答、正誤、モードを取得する。
+その後、取得した履歴を表示する。
+\par 次に、以下の部分の解説を行う。
+
+\begin{lstlisting}[style=result]
+  Please choose an option:
+[1] Take a quiz
+[2] Change mode
+[3] View history
+[4] Clear history
+[5] Exit
+Enter a number: 5
+\end{lstlisting}
+\par この部分は、プログラムを終了する部分である。
+\par EntryPoint.javaのSwitch文により、ユーザが5を入力した場合はプログラムを終了する。
+\par 以上が、実行結果に基づく解説である。
+\par 今回のプロダクトは、ハリーポッターに登場する魔法の名前を当てるクイズゲームである。
+
+\par 今回のプロダクトは、ハリーポッターapiを使用しており、ハリーポッターに登場する魔法の名前を当てるクイズゲームである。
+\par プログラムの実行結果を見てわかるように、クイズの出題形式を4択と2択で切り替えることができる。
+\par また、クイズの履歴を表示することができる。
+\par 今回のプロダクトは、Java 17で新たに採用されたPattern Matching for switchを使用しており、
+それを使用している部分のコードを以下に示す。
+\begin{lstlisting}[style=source]
+  Object obj = choice;
+      switch (obj) {
+        case Integer i:
+        switch (i) {
+          case 1:
+            QuizManager.startQuiz(scanner);
+            break;
+          case 2:
+            QuizManager.changeMode(scanner);
+            break;
+          case 3:
+            System.out.println("履歴を表示します。");
+            QuizHistory.showHistory();
+            break;
+          case 4:
+            QuizHistory.clearHistory();
+            return;// または break + while 条件に false
+          case 5:
+            System.out.println("Exiting the game. Goodbye!");
+            scanner.close();
+            return; // または break + while 条件に false
+          default:
+            System.out.println("無効な入力です。1〜4を選んでください。");
+        }
+
+\end{lstlisting}
+
+このコードでは、Pattern Matching for switchを使用して、Object型の変数objをInteger型にキャストしている。
+これにより、switch文のcaseでInteger型の変数iを使用することができる。
+
+
+
+
+
+
+\section{おわりに}
+今回のプロダクトは、事前にメンバー内で仕事を細分化し、仕事担当領域を割り当てて開発を行った為、スムーズに開発を進めることができた。
+また、GitHubを使用してコードの管理を行い、メンバー間でのコミュニケーションを円滑にすることができた。
+きちんと準備をしたチーム開発は、ストレスが少なく制作が進んでいくので、今後もこのような開発スタイルを続けていきたい。
+
+
+
+\end{document}
