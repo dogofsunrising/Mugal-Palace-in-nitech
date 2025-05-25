@@ -65,14 +65,15 @@ public class HTTPGet {
       // Deserialize the JSON response into an array of Characters objects
       Type characterListType = new TypeToken<Character[]>() {}.getType();
       characters = gson.fromJson(response.toString(), characterListType);
-      for (Character string : characters) {
-        // Print the Characters details
-        System.out.println("ID: " + string.getId());
-        System.out.println("Name: " + string.getName());
-        System.out.println("Description: " + string.getDescription());
-        System.out.println();
-      }
-      // Insert the data into the database
+      // for (Character string : characters) {
+      //   // Print the Characters details
+      //   System.out.println("ID: " + string.getId());
+      //   System.out.println("Name: " + string.getName());
+      //   System.out.println("Description: " + string.getDescription());
+      //   System.out.println();
+      // }
+
+      //Insert the data into the database
       for (Character it_character : characters) {
         // Insert each Characters into the database
         CharacterDao.insert(it_character);
