@@ -1,17 +1,13 @@
 import java.util.Scanner;
 
-import DAO.HistoryDao;
-
 public class EntryPoint {
   public static void main(String[] args) {
     System.out.println("こんにちは、ムガルパレス名工大店へようこそ！");
     System.out.println("これはハリーポッターのクイズゲームです。");
 
     Scanner scanner = new Scanner(System.in);
-    int choice = 0;
 
     while (true) {
-      choice = 0; // 初期化
       System.out.println("\nオプションを選択してください:");
       System.out.println("[1] クイズに挑戦する");
       System.out.println("[2] モードを変更する");
@@ -21,10 +17,20 @@ public class EntryPoint {
 
       System.out.print("番号を入力してください: ");
       // 入力のチェックも兼ねてtry-catchで安全にするのが理想だが、今回は簡易に
-      
+    
+      String text = scanner.nextLine();
 
-      choice = scanner.nextInt();
-      Object obj = choice;
+      Object obj = null;
+
+      if (isInteger(text)) {
+        obj = Integer.parseInt(text);
+      } else if (isDouble(text)) {
+          obj = Double.parseDouble(text);
+      } else if (isBoolean(text)) {
+          obj = Boolean.parseBoolean(text);
+      } else {
+          obj = text; // 文字列として扱う
+      }
       switch (obj) {
         case Integer i:
         switch (i) {
@@ -58,4 +64,25 @@ public class EntryPoint {
       }
     }
   }
+  private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return s.contains("."); // 明確に小数点がある場合のみdouble扱いにする
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isBoolean(String s) {
+        return s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false");
+    }
 }
