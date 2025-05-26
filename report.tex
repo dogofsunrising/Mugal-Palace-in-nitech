@@ -147,7 +147,7 @@ for tree={
 
 \par また、今後の解説に使用するためプログラムの実行結果を以下に示す。
 \begin{lstlisting}[style=result]
-  こんにちは、ムガルパレス名工大店へようこそ！
+こんにちは、ムガルパレス名工大店へようこそ！
 これはハリーポッターのクイズゲームです。
 
 オプションを選択してください:
@@ -161,7 +161,7 @@ for tree={
 2: Levicorpus
 3: Ferula
 4: Incendio
-正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 2
+正しい名前の番号を選んでください（1-4）: 2
 不正解。正解は 1: Bat です。
 
 オプションを選択してください:
@@ -189,7 +189,7 @@ for tree={
 番号を入力してください: 1
 説明: One of three Unforgivable Curses, it causes unbearable pain in the target
 名前: Crucio
-この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: y    
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y    
 正解！
 
 オプションを選択してください:
@@ -241,7 +241,7 @@ for tree={
 ここからは、実行結果に基づいて解説を行う。
 \par まず、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  こんにちは、ムガルパレス名工大店へようこそ！
+こんにちは、ムガルパレス名工大店へようこそ！
 これはハリーポッターのクイズゲームです。
 オプションを選択してください:
 [1] クイズに挑戦する
@@ -255,7 +255,7 @@ for tree={
 2: Levicorpus
 3: Ferula
 4: Incendio
-正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 2
+正しい名前の番号を選んでください（1-4）: 2
 不正解。正解は 1: Bat です。
 \end{lstlisting}
 この部分は、クイズの出題と回答の部分である。
@@ -278,7 +278,7 @@ for tree={
 そのうち1つを正解として、残りの3つを不正解として選択肢を作成する。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  オプションを選択してください:
+オプションを選択してください:
 [1] クイズに挑戦する
 [2] モードを変更する
 [3] 履歴を表示する
@@ -309,7 +309,7 @@ for tree={
 番号を入力してください: 1
 説明: One of three Unforgivable Curses, it causes unbearable pain in the target
 名前: Crucio
-この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: y
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y
 正解！
 \end{lstlisting}
 
@@ -317,7 +317,7 @@ for tree={
 先ほどの解説で説明したため、ここでは詳細な解説は省略する。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  オプションを選択してください:
+オプションを選択してください:
 [1] クイズに挑戦する
 [2] モードを変更する
 [3] 履歴を表示する
@@ -335,7 +335,7 @@ for tree={
 その後、取得した履歴を表示する。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  オプションを選択してください:
+オプションを選択してください:
 [1] クイズに挑戦する
 [2] モードを変更する
 [3] 履歴を表示する
@@ -350,7 +350,7 @@ Historyテーブルのデータを全て削除する。
 \par 最後に、以下の部分の解説を行う。
 
 \begin{lstlisting}[style=result]
-  オプションを選択してください:
+オプションを選択してください:
 [1] クイズに挑戦する
 [2] モードを変更する
 [3] 履歴を表示する
@@ -369,8 +369,20 @@ Historyテーブルのデータを全て削除する。
 \par 今回のプロダクトは、Java 17で新たに採用されたPattern Matching for switchを使用しており、
 それを使用している部分のコードを以下に示す。
 \begin{lstlisting}[style=source]
-  Object obj = choice;
-switch (obj) {
+String text = scanner.nextLine();
+
+      Object obj = null;
+
+      if (isInteger(text)) {
+        obj = Integer.parseInt(text);
+      } else if (isDouble(text)) {
+          obj = Double.parseDouble(text);
+      } else if (isBoolean(text)) {
+          obj = Boolean.parseBoolean(text);
+      } else {
+          obj = text; // 文字列として扱う
+      }
+      switch (obj) {
         case Integer i:
         switch (i) {
           case 1:
@@ -385,22 +397,22 @@ switch (obj) {
             break;
           case 4:
             QuizHistory.clearHistory();
-            return;// または break + while 条件に false
+            break;// または break + while 条件に false
           case 5:
-            System.out.println("Exiting the game. Goodbye!");
+            System.out.println("ゲームを終了します。ご利用ありがとうございました！");
             scanner.close();
             return; // または break + while 条件に false
           default:
-            System.out.println("無効な入力です。1〜4を選んでください。");
+            System.out.println("無効な入力です。1から5を選んでください。");
         }
           break;
       
-          case String s:
+        case String s:
           System.out.println("無効な入力です。数字を入力してください。");
           break;
         default:
           break;
-      } 
+      }
 \end{lstlisting}
 
 このコードでは、Pattern Matching for switchを使用して、Object型の変数objをInteger型にキャストしている。
@@ -415,7 +427,7 @@ switch (obj) {
   \item きちんとコードが実行され、Welcomeメッセージが表示されることを確認する。そして5を入力した場合は、プログラムが終了することを確認する。
   \item ユーザが数字以外の無効な入力をした場合、適切なエラーメッセージが表示されることを確認する。
   \item ユーザが4を入力した場合、履歴がクリアされることを確認する。
-  \item ユーザが3を入力した場合、履歴が表示されることを確認する。
+  \item 1を押すと問題が出され、解答を行い、正誤判定が行われ、履歴が保存され、ユーザが3を入力した場合、履歴が表示されることを確認する。
   \item ユーザが2を入力した場合、モードが変更されることを確認する。
 \end{itemize}
 
