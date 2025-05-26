@@ -40,7 +40,7 @@ public class EntryPoint {
             break;
           case 4:
             QuizHistory.clearHistory();
-            return;// または break + while 条件に false
+            break;// または break + while 条件に false
           case 5:
             System.out.println("ゲームを終了します。ご利用ありがとうございました！");
             scanner.close();

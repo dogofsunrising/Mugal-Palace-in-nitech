@@ -338,7 +338,7 @@ Enter a number: 5
 それを使用している部分のコードを以下に示す。
 \begin{lstlisting}[style=source]
   Object obj = choice;
-      switch (obj) {
+switch (obj) {
         case Integer i:
         switch (i) {
           case 1:
@@ -361,7 +361,14 @@ Enter a number: 5
           default:
             System.out.println("無効な入力です。1〜4を選んでください。");
         }
-
+          break;
+      
+          case String s:
+          System.out.println("無効な入力です。数字を入力してください。");
+          break;
+        default:
+          break;
+      } 
 \end{lstlisting}
 
 このコードでは、Pattern Matching for switchを使用して、Object型の変数objをInteger型にキャストしている。
