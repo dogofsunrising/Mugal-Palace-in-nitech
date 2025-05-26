@@ -13,12 +13,12 @@ public class QuizManager {
   }
 
   public static void changeMode(Scanner scanner) {
-    System.out.println("\n--- Change Quiz Mode ---");
-    System.out.println("Current mode: " + (mode == 0 ? "4択モード" : "2択モード"));
-    System.out.println("Select new mode:");
+    System.out.println("\n--- クイズモードの変更 ---");
+    System.out.println("現在のモード: " + (mode == 0 ? "4択モード" : "2択モード"));
+    System.out.println("新しいモードを選択してください:");
     System.out.println("[0] 4択問題モード");
     System.out.println("[1] 2択問題モード");
-    System.out.print("Your choice: ");
+    System.out.print("番号を入力してください: ");
 
     if (scanner.hasNextInt()) {
       int newMode = scanner.nextInt();
