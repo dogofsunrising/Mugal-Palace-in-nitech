@@ -41,9 +41,9 @@
 
 
 \title{プログラミング応用レポート}
-\author{チーム:ムガルパレス名工大店}
+\author{\lstinputlisting{./Name/name.txt}}
 \date{2025年5月26日}
-\setlength{\droptitle}{5em} % タイトルの位置を調整
+\setlength{\droptitle}{-10em} % タイトルの位置を調整
 
 \begin{document}
 \maketitle
@@ -58,7 +58,7 @@
   \item 3章: 解説
   \item 4章: おわりに
 \end{itemize}
-本プロダクトは、ハリーポッターapi\href{https://github.com/KostaSav/hp-api}{[githubのリンク]}を使用しており、ハリーポッターに登場する魔法の名前を当てるクイズゲームである。
+本プロダクトは、ハリーポッターapi\href{https://github.com/KostaSav/hp-api}{[apiのgithubのリンク]}を使用しており、ハリーポッターに登場する魔法の名前を当てるクイズゲームである。
 
 \section{プログラムの概要}
 
@@ -82,15 +82,15 @@
       \item Junitを使用して、プログラムの各機能のテストコードを作成した。
       \item テストコードは、プログラムの各機能が正しく動作することを確認するために使用した。
     \end{itemize}
-    \item BoFのデザインパターンを1つ以上使うこと
+    \item GoFのデザインパターンを1つ以上使うこと
     \begin{itemize}
-      \item BoFのデザインパターンとして、algorithmパターンを使用した。
-      \item algorithmパターン出題形式の変換を行う機能を実装した。
+      \item GoFのデザインパターンとして、Strategyパターンを使用した。
+      \item Strategyパターンを用いて出題形式の変換を行う機能を実装した。
     \end{itemize}
     \item Java 17で新たに採用された言語仕様を調べ、それを用いたプログラムとすること
     \begin{itemize}
       \item Java 17で新たに採用された言語仕様として、Pattern Matching for switchを使用した。
-      \item Pattern Matching for switchを使用して、魔法の名前とその説明を取得するクラスを作成した。
+      \item Pattern Matching for switchを使用して、ユーザーのモード選択の例外処理を行った。
     \end{itemize}
 
   \end{itemize}
@@ -133,8 +133,8 @@ for tree={
     ]
     [AskQuestion.java]
     [EntryPoint.java]
+    [EntryPointTest.java]
     [HTTPGet.java]
-    [HTTPGetTest.java]
     [QuizHistory.java]
     [QuizManager.java]
 ]
@@ -147,75 +147,93 @@ for tree={
 
 \par また、今後の解説に使用するためプログラムの実行結果を以下に示す。
 \begin{lstlisting}[style=result]
-   
-Hello, Mugal Palace in Nitech!
-This is a Harry Potter quiz game.
+  こんにちは、ムガルパレス名工大店へようこそ！
+これはハリーポッターのクイズゲームです。
 
-Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 1
-説明: Conjures and projects Lord Voldemort's Dark Mark
-1: Morsmordre
-2: Avada Kedavra
-3: Mucus Ad Nauseam
-4: Obliviate
-正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 4
-不正解。正解は 1: Morsmordre です。
+オプションを選択してください:
+[1] クイズに挑戦する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 1
+説明: Bogey Hex - Turns the target's boogers into bats
+1: Bat
+2: Levicorpus
+3: Ferula
+4: Incendio
+正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 2
+不正解。正解は 1: Bat です。
 
-Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 2
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 2
 
---- Change Quiz Mode ---
-Current mode: 4択モード
-Select new mode:
+--- クイズモードの変更 ---
+現在のモード: 4択モード
+新しいモードを選択してください:
 [0] 4択問題モード
 [1] 2択問題モード
-Your choice: 1
+番号を入力してください: 1
 モードを 2択問題モード に変更しました。
 
-Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 1
-説明: Reveals the presence of another person
-名前: Homenum Revelio
-この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: n    
-不正解。正解は 〇 です。
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 1
+説明: One of three Unforgivable Curses, it causes unbearable pain in the target
+名前: Crucio
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: y    
+正解！
 
-Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 3
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 3
 履歴を表示します。
 
---- Quiz History ---
-[2025-05-25 13:18:01] 問題: Reveals the presence of another person | 表示名: Homenum Revelio |  正解: Homenum Revelio | 回答: n | 正誤: × | モード: 〇×
-[2025-05-25 13:17:32] 問題: Conjures and projects Lord Voldemort's Dark Mark | 表示名: Obliviate | 正解: Morsmordre | 回答: 4 | 正誤: × | モード: 4択
-[2025-05-25 11:36:42] 問題: Links objects together for better communication | 表示名: Geminio | 正解: Protean Charm | 回答: 2 | 正誤: × | モード: 4択
+--- クイズの履歴 ---
+[2025-05-26 05:53:37] 問題: One of three Unforgivable Curses, it causes unbearable pain in the target | 表示名: Crucio | 正解: Crucio | 回答: y | 正誤: ○ | モード: 〇×
+[2025-05-26 05:53:22] 問題: Bogey Hex - Turns the target's boogers into bats | 表示名: Levicorpus | 正解: Bat | 回答: 2 | 正誤: × | モード: 4択
 
-Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 5
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 4
+履歴をクリアしました。
 
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 3
+履歴を表示します。
+
+--- クイズの履歴 ---
+履歴はまだありません。
+
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 5
+ゲームを終了します。ご利用ありがとうございました！
 \end{lstlisting}
 
 \section{解説}
@@ -223,20 +241,22 @@ Enter a number: 5
 ここからは、実行結果に基づいて解説を行う。
 \par まず、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 1
-説明: Conjures and projects Lord Voldemort's Dark Mark
-1: Morsmordre
-2: Avada Kedavra
-3: Mucus Ad Nauseam
-4: Obliviate
-正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 4
-不正解。正解は 1: Morsmordre です。
+  こんにちは、ムガルパレス名工大店へようこそ！
+これはハリーポッターのクイズゲームです。
+オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 1
+説明: Bogey Hex - Turns the target's boogers into bats
+1: Bat
+2: Levicorpus
+3: Ferula
+4: Incendio
+正しい名前の番号を選んでください（1-4）: 数字で1-4を入力してください: 2
+不正解。正解は 1: Bat です。
 \end{lstlisting}
 この部分は、クイズの出題と回答の部分である。
 ユーザは、1を入力することでクイズを開始することができる。
@@ -246,7 +266,7 @@ Enter a number: 1
 
 \par 実際にこの部分のロジックを解説を行う。
 まず、HTTP.Javaにある「fetchAndSaveSpells」という関数を用いてハリーポッターapiから情報を取得して、
-事前に構築したCharacter.javaのクラスに保存する。その後、保存した情報をjbdcを用いてデータベースに保存する。
+事前に構築したCharacter.javaのクラスに保存する。その後、保存した情報をjbdcを用いてdatasテーブルに保存する。
 ここまでの処理は、実際にプロダクトを動かす前に行う必要がある。
 最初にプロダクトを起動する際にはEntryPoint.javaの「main」関数を実行する。
 その後、QuizManager.javaの「startQuiz」関数を実行することでクイズが開始される。
@@ -258,20 +278,20 @@ Enter a number: 1
 そのうち1つを正解として、残りの3つを不正解として選択肢を作成する。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 2
---- Change Quiz Mode ---
-Current mode: 4択モード
-Select new mode:
+  オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 2
+--- クイズモードの変更 ---
+現在のモード: 4択モード
+新しいモードを選択してください:
 [0] 4択問題モード
 [1] 2択問題モード
-Your choice: 1
-モードを 2択問題モード に変更しました。
+番号を入力してください: 1
+モードを 2択問題モード に変更しました。  
 \end{lstlisting}
 \par この部分は、クイズのモードを変更する部分である。この部分では課題の要件であるGoFのデザインパターンを使用している。
 実際に使用しているデザインパターンは、4択の出題形式と2択の出題形式という複数のアルゴリズムを切り替える、Strategyパターンを使用した。
@@ -280,52 +300,64 @@ Your choice: 1
 出題形式を変更することができる。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 1
-説明: Reveals the presence of another person
-名前: Homenum Revelio
-この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: n
-不正解。正解は 〇 です。
+  オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 1
+説明: One of three Unforgivable Curses, it causes unbearable pain in the target
+名前: Crucio
+この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: y または n で入力してください: y
+正解！
 \end{lstlisting}
 
 \par この部分は、2択の出題形式でのクイズの出題と回答の部分である。
 先ほどの解説で説明したため、ここでは詳細な解説は省略する。
 \par 次に、以下の部分の解説を行う。
 \begin{lstlisting}[style=result]
-  Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 3
+  オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 3
 履歴を表示します。
---- Quiz History ---
-[2025-05-25 13:18:01] 問題: Reveals the presence of another person | 表示名: Homenum Revelio |  正解: Homenum Revelio | 回答: n | 正誤: × | モード: 〇×
-[2025-05-25 13:17:32] 問題: Conjures and projects Lord Voldemort's Dark Mark | 表示名: Obliviate | 正解: Morsmordre | 回答: 4 | 正誤: × | モード: 4択
-[2025-05-25 11:36:42] 問題: Links objects together for better communication | 表示名: Geminio | 正解: Protean Charm | 回答: 2 | 正誤: × | モード: 4択
-
-
+--- クイズの履歴 ---
+[2025-05-26 05:53:37] 問題: One of three Unforgivable Curses, it causes unbearable pain in the target | 表示名: Crucio | 正解: Crucio | 回答: y | 正誤: ○ | モード: 〇×
+[2025-05-26 05:53:22] 問題: Bogey Hex - Turns the target's boogers into bats | 表示名: Levicorpus | 正解: Bat | 回答: 2 | 正誤: × | モード: 4択
 \end{lstlisting}
 \par この部分は、クイズの履歴を表示する部分である。
 \par QuizManager.javaの「showHistory」関数が呼び出されることで、QuizHistory.javaの「getHistory」関数が呼び出され、
 出題の際にHistoryクラスに保存されていた、出題の説明、表示名、正解、回答、正誤、モードを取得する。
 その後、取得した履歴を表示する。
 \par 次に、以下の部分の解説を行う。
+\begin{lstlisting}[style=result]
+  オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了
+番号を入力してください: 4
+履歴をクリアしました。
+\end{lstlisting}
+\par この部分は、クイズの履歴をクリアする部分である。
+\par QuizManager.javaの「clearHistory」関数が呼び出されることで、QuizHistory.javaの「clearHistory」関数が呼び出され、
+Historyテーブルのデータを全て削除する。
+\par 最後に、以下の部分の解説を行う。
 
 \begin{lstlisting}[style=result]
-  Please choose an option:
-[1] Take a quiz
-[2] Change mode
-[3] View history
-[4] Clear history
-[5] Exit
-Enter a number: 5
+  オプションを選択してください:
+[1] クイズに挑戦する
+[2] モードを変更する
+[3] 履歴を表示する
+[4] 履歴をクリアする
+[5] 終了  
+番号を入力してください: 5
+ゲームを終了します。ご利用ありがとうございました！
 \end{lstlisting}
 \par この部分は、プログラムを終了する部分である。
 \par EntryPoint.javaのSwitch文により、ユーザが5を入力した場合はプログラムを終了する。
@@ -374,6 +406,20 @@ switch (obj) {
 このコードでは、Pattern Matching for switchを使用して、Object型の変数objをInteger型にキャストしている。
 これにより、switch文のcaseでInteger型の変数iを使用することができる。
 
+\par また、JUnitテストコードの作成も行っており、EntryPointTest.javaにテストコードを記述している。
+\lstinputlisting[style = source]{./EntryPointTest.java}
+\par このテストコードでは、EntryPoint.javaの「main」関数をテストしており、ユーザが入力した値に応じて正しい処理が行われることを確認している。
+テストは5つのケースに分かれており、各ケースで異なる入力値を与えて、期待される出力が得られるかを確認している。
+\par 具体的には、以下のようなテストを行っている。
+\begin{itemize}
+  \item きちんとコードが実行され、Welcomeメッセージが表示されることを確認する。そして5を入力した場合は、プログラムが終了することを確認する。
+  \item ユーザが数字以外の無効な入力をした場合、適切なエラーメッセージが表示されることを確認する。
+  \item ユーザが4を入力した場合、履歴がクリアされることを確認する。
+  \item ユーザが3を入力した場合、履歴が表示されることを確認する。
+  \item ユーザが2を入力した場合、モードが変更されることを確認する。
+\end{itemize}
+
+
 
 
 
@@ -383,7 +429,11 @@ switch (obj) {
 今回のプロダクトは、事前にメンバー内で仕事を細分化し、仕事担当領域を割り当てて開発を行った為、スムーズに開発を進めることができた。
 また、GitHubを使用してコードの管理を行い、メンバー間でのコミュニケーションを円滑にすることができた。
 きちんと準備をしたチーム開発は、ストレスが少なく制作が進んでいくので、今後もこのような開発スタイルを続けていきたい。
-
-
+なお、今回のプロダクトで各自が担当した領域を示す。
+\begin{itemize}
+  \item \lstinputlisting{./Name/Ayumu.txt}: APIから情報を取得し、データベースに保存する部分の実装.及び本レポートの作成
+  \item \lstinputlisting{./Name/Haruki.txt}: データベースから得た情報を用いてクイズの出題と回答の部分の実装.JUnitテストコードの作成
+  \item \lstinputlisting{./Name/inusiba.txt}: エントリーポイントの作成、プロダクトの設計、開発方針の決定
+\end{itemize}
 
 \end{document}

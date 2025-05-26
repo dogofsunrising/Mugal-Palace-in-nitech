@@ -39,6 +39,11 @@ public class HTTPGet {
     // Collect the response code
     int responseCode = MyConn.getResponseCode();
 
+    // Print the response code
+    System.out.println("Response Code: " + responseCode);
+    // Check if the response code is HTTP_OK (200)  
+    // If the response code is 200, it means the request was successful
+
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // Create a reader with the input stream reader.
       BufferedReader in = new BufferedReader(new InputStreamReader(MyConn.getInputStream()));
