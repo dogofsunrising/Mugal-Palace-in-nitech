@@ -38,10 +38,6 @@ public class HTTPGet {
 
     // Collect the response code
     int responseCode = MyConn.getResponseCode();
-    //Fetch Test
-    System.out.println("Response Code: " + responseCode);
-    
-    
 
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // Create a reader with the input stream reader.
