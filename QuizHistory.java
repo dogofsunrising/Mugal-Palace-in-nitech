@@ -7,7 +7,7 @@ public class QuizHistory {
 
   // 履歴を表示するメソッド
   public static void showHistory() {
-    System.out.println("\n--- Quiz History ---");
+    System.out.println("\n--- クイズの履歴 ---");
     HistoryDao historyDao = new HistoryDao();
     try {
       java.util.List<HistoryDao.HistoryRecord> historyList = historyDao.getAll();
