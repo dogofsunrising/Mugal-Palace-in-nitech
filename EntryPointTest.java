@@ -64,7 +64,7 @@ public class EntryPointTest {
     public void testShowHistoryAndAnswer() throws Exception {
         InputStream originalIn = System.in;
         PrintStream originalOut = System.out;
-        ByteArrayInputStream in = new ByteArrayInputStream("1\n1\n3\n5\n".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("2\n0\n1\n1\n2\n1\n1\ny\n3\n5\n".getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
@@ -72,6 +72,8 @@ public class EntryPointTest {
         EntryPoint.main(new String[]{});
         String output = out.toString();
         assertTrue(output.contains("正しい名前の番号を選んでください（1-4）: "));
+        assertTrue(output.contains("正解！") || output.contains("不正解。正解は"));
+        assertTrue(output.contains("この説明と名前の組み合わせは正しいですか？（〇: y / ×: n）: "));
         assertTrue(output.contains("正解！") || output.contains("不正解。正解は"));
         assertTrue(output.contains("履歴を表示します。"));
         assertTrue(output.contains("--- クイズの履歴 ---"));
