@@ -1,7 +1,16 @@
 import java.util.Scanner;
 
+import DAO.CharactersDao;
+
 public class EntryPoint {
   public static void main(String[] args) {
+    CharactersDao charactersDao = new CharactersDao();
+    try {
+      charactersDao.createTable(); // テーブルを作成
+    } catch (Exception e) {
+      System.out.println("テーブルの作成に失敗しました: " + e.getMessage());
+      return; // エラーが発生した場合は終了
+    }
     System.out.println("こんにちは、ムガルパレス名工大店へようこそ！");
     System.out.println("これはハリーポッターのクイズゲームです。");
 
